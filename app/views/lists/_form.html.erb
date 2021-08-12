@@ -1,0 +1,5 @@
+<%= simple_form_for @list do |l| %>
+  <%= l.input :name, placeholder: "Write the category name here" %>
+  <%# <%= l.association :movies, placeholder: "Write the movie name here" %>
+  <%= l.submit "Add", class: "btn btn-primary" %>
+<% end %>
