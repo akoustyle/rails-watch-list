@@ -1,11 +1,39 @@
 
-
-<img src="https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80" />
-  <div class="card-product-infos">
-    <h2><strong>My list</strong></h2>
-
-    <p>Name: <strong><%= @list.name %></strong></p><br>
-
-    <%= link_to "Return to the list", lists_path %>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1650&q=80);">
+  <%# <div class="container">
+    <h1>Le Wagon brings <strong>tech skills</strong> to <strong>creative people</strong>!</h1>
+    <p>Change your life and learn to code at one of our campuses around the world.</p>
+    <a class="btn btn-flat" href="#">Apply now</a>
+  </div> %> <h1>My list of movies</h1>
+</div>
+<div class="card-product-infos">
+    <h2><%= @list.name %></h2>
+</div>
+<div class="notification">
+  <img src='' class="avatar-large" />
+  <div class="notification-content">
+    <p><%= link_to "Return to the list", root_path %></p>
+    <p><strong><%= link_to "Add a comment", new_list_bookmark_path(@list)%></strong></p>
+  </div>
+</div>
+<div class="test">
+  <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+    <% @bookmarks.each do |l| %>
+      <div class="col">
+        <div class="card h-100">
+          <img src=<%=l.movie.poster_url%> class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"><%= l.movie.title %></h5>
+            <p class="card-text"><%= l.comment %></p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted"><%= link_to "Remove",
+                      bookmark_path(l),
+                      method: :delete,
+                      data: { confirm: "Are you sure?" } %></small>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
