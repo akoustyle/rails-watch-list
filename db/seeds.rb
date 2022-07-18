@@ -10,11 +10,21 @@
 # Movie.create(title: "Titanic", overview: "101-year-old Rose DeWitt Bukater tells the story of her life aboard the Titanic.", poster_url: "https://image.tmdb.org/t/p/original/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg", rating: 7.9)
 # Movie.create(title: "Ocean's Eight", overview: "Debbie Ocean, a criminal mastermind, gathers a crew of female thieves to pull off the heist of the century.", poster_url: "https://image.tmdb.org/t/p/original/MvYpKlpFukTivnlBhizGbkAe3v.jpg", rating: 7.0)
 
-require 'faker'
-30.times do
-  movie = Faker::Movie.title
-  overview = Faker::Movie.quote
-  poster = 'https://picsum.photos/200/300'
-  rate = Faker::Number.within(range: 0..10)
-  Movie.new(title: movie, overview: overview, poster_url: poster, rating: rate).save
-end
+# require 'faker'
+# 30.times do
+#   movie = Faker::Movie.title
+#   overview = Faker::Movie.quote
+#   poster = 'https://picsum.photos/200/300'
+#   rate = Faker::Number.within(range: 0..10)
+#   Movie.new(title: movie, overview: overview, poster_url: poster, rating: rate).save
+# end
+Bookmark.destroy_all
+Movie.destroy_all
+List.destroy_all
+require 'ostruct'
+
+
+Tmdb::Api.key('fbc96d7c6f7cd31adfeb4cf058ed0813')
+Tmdb::Api.language('fr')
+
+puts 'Done!'

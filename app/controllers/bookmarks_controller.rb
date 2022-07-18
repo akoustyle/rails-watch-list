@@ -1,32 +1,48 @@
 class BookmarksController < ApplicationController
+  Tmdb::Api.key(ENV['TMDB_API_KEY'])
+  Tmdb::Api.language('fr')
+
+  before_action :set_bookmark, only: :destroy
   def new
-    @list = List.find(params[:list_id])
+    # @list = List.find(params[:list_id])
     @bookmark = Bookmark.new
+    @movie = Movie.new
+    @lists = List.all
   end
 
   def create
     @bookmark = Bookmark.new(bookmark_params)
-    @list = List.find(params[:list_id])
-    @bookmark.list = @list
-    @bookmark.movie = Movie.find(params['bookmark']['movie_id'])
-
+    @movie = Movie.create(movie_api_id: params[:movie_id])
+    @movie.save!
+    @bookmark.movie = @movie
+    @bookmark.movie_id = @movie.id
+    @lists = List.all
+    @bookmark.save
     if @bookmark.save
       redirect_to list_path(@list)
     else
-      render :new
+      render
     end
   end
 
+  def show
+  end
+
   def destroy
-    @bookmark = Bookmark.find(params[:id])
+    @list = List.find(params[:id])
+    @bookmark = Bookmark.find(params[:list_id])
     @bookmark.destroy
-    redirect_to list_path(@bookmark.list)
+    if bookmark.destroy
+      redirect_to list_path(@list)
+    else
+      render :new_list_bookmark
+    end
   end
 
   private
 
   def bookmark_params
-    params.require(:bookmark).permit(:comment, :movie_id)
+    params.require(:bookmark).permit(:comment, :list_id, :movie_id)
   end
 
   def set_bookmark
